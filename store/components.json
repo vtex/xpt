@@ -1,0 +1,23 @@
+{
+    "ProductSummary": {
+        "extensions": {
+            "reviews": {
+                "description": "Displays review info for some product."
+            }
+        }
+    },
+    "Shelf": {
+        "extensions": {
+            "product-summary": {
+                "description": "Product summary",
+                "default": "vtex.productsummary/ProductSummary"
+            },
+            "product-summary.reviews": {
+                "default": "vtex.strelinha/stars"
+            },
+            "arrow": {
+                "description": "Arrow"
+            }
+        }
+    }
+}

@@ -1,0 +1,6 @@
+{
+    "store.shelf": {
+        "description": "A porra da mudança que minha app realiza",
+        "component": "Shelf"
+    }
+}
