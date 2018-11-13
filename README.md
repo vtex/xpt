@@ -127,6 +127,8 @@ We already have the power to declare and extend templates. Now we need to be abl
 
 Routes should be treated the same way extension points are. They are a special type of extension point. This means that a route called `store/home` works the same way an extension point called `store/home` would, being filled by a `store/home` template declared on this app or on a dependency.
 
+## Configurations
+
 ### Classes and extensions
 
 ## Theming
