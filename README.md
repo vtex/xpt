@@ -79,7 +79,7 @@ To create a block that can replace the `store/home` via the Storefront editor, w
 }
 ```
 
-Great! But what does `store/home` mean? What about `header/full`? Well, we need to depend on the apps that declare them otherwise none of this makes any sense. Let's do that on our `manifest.json`.
+Great! But what does `store/home` mean? What about `banner`? Well, we need to depend on the apps that declare them otherwise none of this makes any sense. Let's do that on our `manifest.json`.
 
 ```jsonc
 {
@@ -187,12 +187,75 @@ The folder structure for this app is looking something like:
 
 Note that we didn't need to declare `render` as a dependency in `package.json`. That dependency is already injected by the `react` builder.
 
-### Providing blocks
+#### Configureable React
 
 TODO.
 
-- Explain how to provide blocks that are not templates and extend existing blocks. Basically a small repetition of "providing templates".
-- Explain the possibility of providing brand new blocks and how you need to extend an existing template to use it.
+- Explain component schemas
+
+### Providing blocks
+
+Let's create another app `partner.shelf` that provides an alternative shelf with a different React component. instead of providing a full template. The process is very similar to creating a template. We'll have both the `react` and the `store` builders. The folder structure might look something like:
+
+```txt
+.
+├── manifest.json
+├── react
+|   ├── package.json
+|   ├── Description.json
+|   └── Shelf.jsx
+└── store
+    └── blocks.json
+```
+
+The `manifest.json` declares both builders and the dependency on `vtex.shelf` and `vtex.product-summary`, since the app want to extend the Dream Store `shelf` block.
+
+```jsonc
+{
+    "vendor": "partner",
+    "name": "shelf",
+    "description": "A different shelf, made by partner.",
+    "builders": {
+        "store": "0.x",
+        "react": "2.x"
+    },
+    "dependencies": {
+        "vtex.product-summary": "1.x",
+        "vtex.shelf": "0.x"
+    }
+}
+```
+
+The `blocks.json` creates a `shelf` block that extends the `shelf` block on `vtex.shelf`. We could extend it more explicitly by calling it, for example, `shelf/alternative`, but, since we depend on someone who declares a `shelf`, it is clear that, by declaring another `shelf`, we are extending the one on `vtex.shelf`. We also add a new block inside the shelf, a `shelf-description` block, which loads a `Description` react component.
+
+```json
+{
+    "shelf": {
+        "name": "Shelf with description",
+        "component": "Shelf",
+        "blocks": ["shelf-description", "product-summary"]
+    },
+    "shelf-description": {
+        "component": "Description"
+    }
+}
+```
+
+This structure is enough to provide this alternative shelf to be used on the Storefront editor. When installed, this app will provide the alternative shelf.
+
+Note that we've also created a brand new block, that doesn't extend any previous declared block. The `shelf-description`. We can create brand new blocks all we want. We may, for example, create a `creative-block` that provides a brand new feature and add it to the home page by providing a new `store/home` that uses it.
+
+```json
+{
+    "store/home": {
+        "name": "Home page with a creative block",
+        "blocks": ["header/full", "banner", "shelf", "creative-block", "footer"]
+    ,
+    "creative-block": {
+        "component": "CreativeBlock"
+    }
+}
+```
 
 ### Themes
 
