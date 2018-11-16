@@ -257,18 +257,41 @@ Note that we've also created a brand new block, that doesn't extend any previous
 }
 ```
 
+### Routes
+
+Suppose we want the `partner.theme` app to declare a new route. A new URL that can be accessed, providing some specific template. The `store` builder gives us that power via the `routes.json` file.
+
+```txt
+.
+├── manifest.json
+└── store
+    ├── routes.json
+    └── blocks.json
+```
+
+Suppose our store's url is `store.com` and we want the `store.com/custom` url to hit the `store/custom` template. We need to add a route to our `routes.json`.
+
+```jsonc
+{
+    "store/custom": {
+        "path": "/custom"
+    }
+}
+```
+
+This means that the `store/custom` declared on the `blocks.json` will be rendered when `/custom` is accessed after this app is installed.
+
 ### Themes
 
-TODO.
+There's a definition of which app is used as a theme is being used on the store. This is set by the Storefront editor. The default theme for every store is the Dream Store. Every store uses exactly one app as theme.
 
-- Explain how an app can be set as a theme. Removing the need from the Storefront user to select every template provided.
+The theme definition because we will often want to install an app that provides a lot of blocks and wish those blocks to change the whole design of the store, not only provide some blocks to be used here and there. That why this is how we choose which block is used every time we need to choose one:
 
-## Routes
+1. Was this block selected by storefront? If so, use that.
+2. Does the theme extend the block defined here by using the same name? If so, use that.
+3. Use the defined block.
 
-TODO.
-
-- How to add store routes?
-- How to add custom routes?
+That is, suppose we are trying using the `store/home` template from the Dream Store and are trying to decide which block will be used as `shelf`. The name `shelf` refers to the `shelf` block declared in `vtex.shelf`,  since `vtex.dreamstore` depends on `vtex.shelf`. If the block was explicitly replaced via the Storefront editor, we use the selected one. If the theme depends on `vtex.shelf` and declares a `shelf` block, we use that. Otherwise, we simply use the `shelf` defined in `vtex.shelf`, since that's what `store/home` reffered to.
 
 ## Configs
 
