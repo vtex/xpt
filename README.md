@@ -293,6 +293,15 @@ The theme definition because we will often want to install an app that provides 
 
 That is, suppose we are trying using the `store/home` template from the Dream Store and are trying to decide which block will be used as `shelf`. The name `shelf` refers to the `shelf` block declared in `vtex.shelf`,  since `vtex.dreamstore` depends on `vtex.shelf`. If the block was explicitly replaced via the Storefront editor, we use the selected one. If the theme depends on `vtex.shelf` and declares a `shelf` block, we use that. Otherwise, we simply use the `shelf` defined in `vtex.shelf`, since that's what `store/home` referred to.
 
+### Naming conflicts
+
+TODO. Explain the name conflicts resolving rules and how to specify the app using the `:` operator.
+
+1. If block name is declared in the same file, use that.
+2. If block name is declared in more than one dependency, fail.
+3. If block name is declared in exactly one dependency, use that.
+4. If block name is never declared, fail.
+
 ## Configs
 
 TODO. This is the advanced user part.
