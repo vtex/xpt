@@ -291,7 +291,7 @@ The theme definition because we will often want to install an app that provides 
 2. Does the theme extend the block defined here by using the same name? If so, use that.
 3. Use the defined block.
 
-That is, suppose we are trying using the `store/home` template from the Dream Store and are trying to decide which block will be used as `shelf`. The name `shelf` refers to the `shelf` block declared in `vtex.shelf`,  since `vtex.dreamstore` depends on `vtex.shelf`. If the block was explicitly replaced via the Storefront editor, we use the selected one. If the theme depends on `vtex.shelf` and declares a `shelf` block, we use that. Otherwise, we simply use the `shelf` defined in `vtex.shelf`, since that's what `store/home` reffered to.
+That is, suppose we are trying using the `store/home` template from the Dream Store and are trying to decide which block will be used as `shelf`. The name `shelf` refers to the `shelf` block declared in `vtex.shelf`,  since `vtex.dreamstore` depends on `vtex.shelf`. If the block was explicitly replaced via the Storefront editor, we use the selected one. If the theme depends on `vtex.shelf` and declares a `shelf` block, we use that. Otherwise, we simply use the `shelf` defined in `vtex.shelf`, since that's what `store/home` referred to.
 
 ## Configs
 
