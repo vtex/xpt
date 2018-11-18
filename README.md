@@ -4,7 +4,7 @@
 
 Stores using [VTEX IO](https://vtex.io/) can edit their content through the Storefront editor. This app allows a store admin to edit the layout, content and style of every page in the store.
 
-The default store installed on an VTEX IO store uses the [Dream Store](https://github.com/vtex-apps/dreamstore) theme. That is defined by the `vtex.dreamstore` app and it already provides a fully featured and highly configurable store that is continuously being improved by VTEX.
+The default VTEX IO store uses the [Dream Store](https://github.com/vtex-apps/dreamstore) theme. That is defined by the `vtex.dreamstore` app and it already provides a fully featured and highly configurable store that is continuously being improved by VTEX.
 
 ## Blocks
 
