@@ -33,12 +33,12 @@ function buildExtensionFromBlock (block: Readonly<Block>, treePath: string): Ext
   }
 }
 
-function getDeepExtensionDescriptions (treePath: string, addToTreePath: boolean) {
+function getDeepExtensionDescriptions (treePath: string) {
   return (block: Readonly<Block>): DeepExtensionDescriptionArray => {
-    const childrenTreePath = addToTreePath ? concat(concat(treePath, '/'), block.id) : treePath
+    const currentTreePath = treePath === '' ? block.id : concat(concat(treePath, '/'), block.id)
     return [
-      buildExtensionFromBlock(block, treePath),
-      map(getDeepExtensionDescriptions(childrenTreePath, true), block.blocks)
+      buildExtensionFromBlock(block, currentTreePath),
+      map(getDeepExtensionDescriptions(currentTreePath), block.blocks)
     ]
   }
 }
@@ -49,11 +49,12 @@ function addToPagesExtensions (current: PagesExtensions, description: ExtensionD
 }
 
 function templateFromRoute (route: Readonly<Route>): PagesTemplate {
-  const deepExtensionDescriptions = getDeepExtensionDescriptions('', false)(route.block)
+  const deepExtensionDescriptions = map(getDeepExtensionDescriptions(''), route.block.blocks)
   const extensionDescriptions = flatten(deepExtensionDescriptions) as ExtensionDescription[]
   return {
     component: route.block.component,
-    extensions: reduce(addToPagesExtensions, {}, extensionDescriptions)
+    extensions: reduce(addToPagesExtensions, {}, extensionDescriptions),
+    props: route.block.props,
   }
 }
 
