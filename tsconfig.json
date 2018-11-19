@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "types": [
+      "node",
+      "jest"
+    ],
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "jsx": "react",
+    "lib": ["es2017", "dom"],
+    "module": "es6",
+    "moduleResolution": "node",
+    "outDir": "lib",
+    "sourceMap": true,
+    "target": "es2017",
+    "skipLibCheck": true,
+    "strict": true,
+    "removeComments": true
+  },
+  "typeAcquisition": {
+    "enable": false
+  },
+  "include": [
+    "src/**/*"
+  ],
+
+}
