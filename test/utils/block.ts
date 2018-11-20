@@ -1,6 +1,6 @@
-import { append, compose, map, range }  from 'ramda'
+import { append, map, range }  from 'ramda'
 import { Block } from '../../src/types'
-import { invertedNth, notNull } from './helpers'
+import { invertedNth } from './helpers'
 
 function generateLeafBlock (index: number): Block {
   return {

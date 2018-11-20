@@ -12,16 +12,16 @@ export default function buildPagesJSON (routes: ReadonlyArray<Route>): PagesJSON
   }
 }
 
-function pageFromTemplateName (templateName: string): PagesPage[] {
+function pageFromTemplateName (template: string): PagesPage[] {
   return [{
     name: '',
-    template: templateName
+    template,
   }]
 }
 
 function transpileRoute (route: Readonly<Route>): PagesRoute {
   return {
-    path: route.path
+    path: route.path,
   }
 }
 

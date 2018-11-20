@@ -1,28 +1,19 @@
 {
   "compilerOptions": {
-    "types": [
-      "node",
-      "jest"
-    ],
-    "allowJs": true,
-    "allowSyntheticDefaultImports": true,
-    "jsx": "react",
-    "lib": ["es2017", "dom"],
-    "module": "es6",
-    "moduleResolution": "node",
-    "outDir": "lib",
-    "sourceMap": true,
+    "types": ["node", "jest"],
+    "typeRoots": ["node_modules/@types"],
     "target": "es2017",
-    "skipLibCheck": true,
-    "strict": true,
-    "strictNullChecks": true,
-    "removeComments": true
+    "module": "commonjs",
+    "sourceMap": false,
+    "outDir": "lib",
+    "allowJs": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitThis": true,
+    "skipLibCheck": true
   },
   "typeAcquisition": {
     "enable": false
   },
-  "include": [
-    "src/**/*"
-  ],
-
+  "include": ["src/**/*"]
 }

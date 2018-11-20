@@ -7,7 +7,7 @@
     "prepare": "yarn lint && yarn test && yarn build",
     "build": "tsc",
     "test": "jest",
-    "lint": "tsc --noEmit --pretty && tslint src/**/*.ts"
+    "lint": "tsc --noEmit --pretty && tslint -c tslint.json './**/*.ts' -e './lib/**/*'"
   },
   "files": [
     "lib"

@@ -4,8 +4,6 @@ import { compose, curry } from 'ramda'
 import { appendBlock, generateLeafBlocks } from './utils/block'
 import { buildPagesPages } from './utils/pages'
 
-import { Block, Route } from '../src/types'
-
 describe('buildPagesJSON', () => {
   it('converts between Routes and the Pages.json format',  () => {
     const block = {
