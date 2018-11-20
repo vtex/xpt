@@ -1,14 +1,20 @@
+import { Block } from  './Block'
+import { ReactProps } from './React'
+import { Route } from './Route'
+
 import { concat, dissoc, flatten, map, range, reduce, toString, zipObj } from 'ramda'
 
-import { Block, PagesExtension, PagesExtensions, PagesJSON, PagesPage, PagesRoute, PagesTemplate, Route } from './types'
+export default class PagesJSON {
+  public pages: PagesPages
+  public routes: PagesRoutes
+  public templates: PagesTemplates
 
-export default function buildPagesJSON (routes: ReadonlyArray<Route>): PagesJSON {
-  const pagesTemplateNames = map(toString, range(0,routes.length))
+  constructor (routes: ReadonlyArray<Route>) {
+    const pagesTemplateNames = map(toString, range(0,routes.length))
 
-  return {
-    pages: zipObj(pagesTemplateNames, map(pageFromTemplateName, pagesTemplateNames)),
-    routes: zipObj(pagesTemplateNames, map(transpileRoute, routes)),
-    templates: zipObj(pagesTemplateNames, map(templateFromRoute, routes)),
+    this.pages = zipObj(pagesTemplateNames, map(pageFromTemplateName, pagesTemplateNames))
+    this.routes = zipObj(pagesTemplateNames, map(transpileRoute, routes))
+    this.templates = zipObj(pagesTemplateNames, map(templateFromRoute, routes))
   }
 }
 
@@ -56,6 +62,30 @@ function templateFromRoute (route: Readonly<Route>): PagesTemplate {
     extensions: reduce(addToPagesExtensions, {}, extensionDescriptions),
     props: route.block.props,
   }
+}
+
+interface PagesRoutes { [templateID: string]: PagesRoute }
+interface PagesRoute {
+  path: string
+}
+
+interface PagesTemplates { [templateID: string]: PagesTemplate}
+interface PagesTemplate {
+  component: string
+  props?: ReactProps
+  extensions: PagesExtensions
+}
+
+interface PagesExtensions { [treepath: string]: PagesExtension }
+interface PagesExtension {
+  component: string
+  props?: ReactProps
+}
+
+interface PagesPages { [templateID: string]: PagesPage[] }
+interface PagesPage {
+  name: string
+  template: string
 }
 
 interface ExtensionDescription extends PagesExtension {

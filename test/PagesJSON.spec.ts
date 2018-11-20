@@ -1,4 +1,4 @@
-import buildPagesJSON from '../src/buildPagesJSON'
+import PagesJSON from '../src/PagesJSON'
 
 import { compose, curry } from 'ramda'
 import { appendBlock, generateLeafBlocks } from './utils/block'
@@ -21,7 +21,7 @@ describe('buildPagesJSON', () => {
       path: '/',
     }
 
-    expect(buildPagesJSON([route])).toEqual({
+    expect(new PagesJSON([route])).toEqual({
       pages: buildPagesPages(['0']),
       routes: {
         '0': {
@@ -60,7 +60,7 @@ describe('buildPagesJSON', () => {
       }
     ]
 
-    expect(buildPagesJSON(routes)).toEqual({
+    expect(new PagesJSON(routes)).toEqual({
       pages: buildPagesPages(['0','1']),
       routes: {
         '0': {
@@ -95,7 +95,7 @@ describe('buildPagesJSON', () => {
       },
     ]
 
-    expect(buildPagesJSON(routes)).toEqual({
+    expect(new PagesJSON(routes)).toEqual({
       pages: buildPagesPages(['0']),
       routes: {
         '0': {
@@ -137,7 +137,7 @@ describe('buildPagesJSON', () => {
       }
     ]
 
-    expect(buildPagesJSON(routes)).toEqual({
+    expect(new PagesJSON(routes)).toEqual({
       pages: buildPagesPages(['0']),
       routes: {
         '0': {
