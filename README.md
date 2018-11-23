@@ -2,6 +2,20 @@
 
 > How to build apps that extend and configure VTEX IO stores.
 
+## Table of Contents
+
+- [Blocks](#blocks)
+  * [Providing new templates](#providing-new-templates)
+  * [Adding React](#adding-react)
+    + [Configureable React](#configureable-react)
+  * [Providing blocks](#providing-blocks)
+  * [Routes](#routes)
+  * [Themes](#themes)
+  * [Naming conflicts](#naming-conflicts)
+- [Configs](#configs)
+  * [Configuring a block](#configuring-a-block)
+  * [Plug and play](#plug-and-play)
+
 Stores using [VTEX IO](https://vtex.io/) can edit their content through the Storefront editor. This app allows a store admin to edit the layout, content and style of every page in the store.
 
 The default store installed on an VTEX IO store uses the [Dream Store](https://github.com/vtex-apps/dreamstore) theme. That is defined by the `vtex.dreamstore` app and it already provides a fully featured and highly configurable store that is continuously being improved by VTEX.
