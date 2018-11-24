@@ -16,19 +16,19 @@
   * [Configuring a block](#configuring-a-block)
   * [Plug and play](#plug-and-play)
 
-Stores using [VTEX IO](https://vtex.io/) can edit their content through the Storefront editor. This app allows a store admin to edit the layout, content and style of every page in the store.
+Stores using [VTEX IO](https://vtex.io/) can edit their content through the Storefront editor. This app allows a store admin to edit the layout, content, and style of every page in the store.
 
-The default store installed on an VTEX IO store uses the [Dream Store](https://github.com/vtex-apps/dreamstore) theme. That is defined by the `vtex.dreamstore` app and it already provides a fully featured and highly configurable store that is continuously being improved by VTEX.
+The default store installed on a VTEX IO store uses the [Dream Store](https://github.com/vtex-apps/dreamstore) theme. That is defined by the `vtex.dreamstore` app and it already provides a fully featured and highly configurable store that is continuously being improved by VTEX.
 
 ## Blocks
 
-The store builder allows you to extend existing blocks, like the ones provided by the Dream Store, allowing them to replace the blocks they extend via the Storefront editor. They also allow you to build completely new blocks that provide functionality specific to your business needs and, then, create templates to insert those new blocks in your client's store while still benefiting from the continuous progress made by the Dream Store and it's extensions on the other parts of your store.
+The store builder allows you to extend existing blocks, like the ones provided by the Dream Store, allowing them to replace the blocks they extend via the Storefront editor. They also allow you to build entirely new blocks that provide functionality specific to your business needs and, then, create templates to insert those new blocks in your client's store while still benefiting from the continuous progress made by the Dream Store and its extensions on the other parts of your store.
 
 ### Providing new templates
 
-Let's build an app that provides a new home page template. Our template will be available on the Storefront editor for the admin to select among the various templates available. The Dream Store provides a home page template and the various blocks used in it, among several other templates and blocks, let's use the available blocks to build a home page different from the Dream Store's home page.
+Let's build an app that provides a new homepage template. Our template is available on the Storefront editor for the admin to select among the various templates available. The Dream Store provides a homepage template and the various blocks used in it, among several other templates and blocks, let's use the available blocks to build a homepage different from the Dream Store's homepage.
 
-First, we will need to [build a new IO app](http://help.vtex.com/en/tracks/vtex-io-getting-started). Let's call our app `partner.theme`. The starting point to creating a new template is the `store` builder. First, let's use that by declaring it on our app's `manifest.json`.
+First, we need to [build a new IO app](http://help.vtex.com/en/tracks/vtex-io-getting-started). Let's call our app `partner.theme`. The starting point for creating a new template is the `store` builder. First, let's use that by declaring it on our app's `manifest.json`.
 
 ```jsonc
 {
@@ -42,7 +42,7 @@ First, we will need to [build a new IO app](http://help.vtex.com/en/tracks/vtex-
 }
 ```
 
-Configuring the store builder requires a `store` folder on the root of our app. If we want to create templates, we will need a `blocks.json` file inside that `store` folder. This means that, for now, our app's folder structure contains at least:
+Configuring the store builder requires a `store` folder on the root of our app. If we want to create templates, we need a `blocks.json` file inside that `store` folder. This means that, for now, our app's folder structure contains at least:
 
 ```txt
 .
@@ -51,7 +51,7 @@ Configuring the store builder requires a `store` folder on the root of our app. 
     └── blocks.json
 ```
 
-The Dream Store has already defined a home page template, which is the one used by default. Let's take a look at what that portion of the `blocks.json` from the `vtex.dreamstore` app looks like.
+The Dream Store has already defined a home page template, which is the one used by default. Let's take a look at what that portion of the `blocks.json` from the `vtex.dreamstore` app looks.
 
 ```jsonc
 {
@@ -63,7 +63,7 @@ The Dream Store has already defined a home page template, which is the one used 
 }
 ```
 
-This file is declaring a `store/home` block which has a descriptive `name` which will be displayed in the Storefront editor. It also declares which blocks are contained within it. This means that the same `blocks.json` may declare those blocks or that the app depends on apps that declare those blocks inside their `blocks.json` files. In this specific case, the `vtex.dreamstore` app depends on apps that declare each of those, `vtex.header` declaring `header`, `vtex.banner` declaring `banner`, `vtex.shelf` declaring `shelf` and `vtex.footer` declaring `footer`.
+This file is declaring a `store/home` block which has a descriptive `name` which is displayed in the Storefront editor. It also declares which blocks are contained within it. This means that the same `blocks.json` may declare those blocks or that the app depends on apps that declare those blocks inside their `blocks.json` files. In this specific case, the `vtex.dreamstore` app depends on apps that declare each of those, `vtex.header` declaring `header`, `vtex.banner` declaring `banner`, `vtex.shelf` declaring `shelf` and `vtex.footer` declaring `footer`.
 
 Why did Dream Store use `store/home` instead of just calling the block `home`? This means that `store/home` is a block that **extends** a `store` block. The `vtex.dreamstore` app depends on `vtex.store` which declares the `store` block, let's take a look at that declaration.
 
@@ -77,7 +77,7 @@ Why did Dream Store use `store/home` instead of just calling the block `home`? T
 }
 ```
 
-It actually has some other definitions, but this part means that every extension of a `store` block contains a `header` and a `footer`. If `store/home` didn't contain either a `header` or a `footer` it would fail to build.
+It has some other definitions, but this part means that every extension of a `store` block contains a `header` and a `footer`. If `store/home` didn't contain either a `header` or a `footer` it would fail to build.
 
 Note that `store/home` could use `header/full` instead of `header`, even though `store` forced it to have a `header` block. That is because the main advantage of extensibility is that **every block can be replaced by an extension of it**. Meaning that, since `header/full` extends `header`, we could use it to fill a gap destined for `header`.
 
@@ -93,7 +93,7 @@ To create a block that can replace the `store/home` via the Storefront editor, w
 }
 ```
 
-Great! But what does `store/home` mean? What about `banner`? Well, we need to depend on the apps that declare them otherwise none of this makes any sense. Let's do that on our `manifest.json`.
+Great! However, what does `store/home` mean? What about `banner`? Well, we need to depend on the apps that declare them otherwise none of this makes any sense. Let's do that on our `manifest.json`.
 
 ```jsonc
 {
@@ -114,13 +114,13 @@ Great! But what does `store/home` mean? What about `banner`? Well, we need to de
 }
 ```
 
-That's it! Now we can link `partner.theme` by running `vtex link` on it's root folder and check our brand new home template available through the Storefront editor. When we publish this app and a store installs it by running `vtex install partner.theme`, it will also be available.
+That's it! Now we can link `partner.theme` by running `vtex link` on its root folder and check our brand new home template available through the Storefront editor. When we publish this app and a store installs it by running `vtex install partner.theme`, it also is available.
 
 ### Adding React
 
-We've only declared simple blocks so far, ones that just load a block after another, this didn't require any react from our side. These are very useful because they allow the store admin to reorder the components via the Storefront editor through a drag and drop interface, therefore, we encourage using them as much as possible.
+We've only declared simple blocks so far, ones that load a block after another, this didn't require any react from our side. These are very useful because they allow the store admin to reorder the components via the Storefront editor through a drag and drop interface. Therefore, we encourage using them as much as possible.
 
-Despite that, of course, many times we do need more complex blocks, that's why we allow the full power of [React](http://reactjs.org). Let's take a look at what the `shelf` block inside `vtex.shelf` looks like.
+Despite that, of course, many times we do need more complex blocks, that's why we allow the full power of [React](http://reactjs.org). Let's take a look at what the `shelf` block inside `vtex.shelf` looks.
 
 ```jsonc
 {
@@ -199,7 +199,7 @@ The folder structure for this app is looking something like:
     └── blocks.json
 ```
 
-Note that we didn't need to declare `render` as a dependency in `package.json`. That dependency is already injected by the `react` builder.
+Note that we didn't need to declare `render` as a dependency on `package.json`. The `react` builder already injects that dependency.
 
 #### Configureable React
 
@@ -209,7 +209,7 @@ TODO.
 
 ### Providing blocks
 
-Let's create another app `partner.shelf` that provides an alternative shelf with a different React component. instead of providing a full template. The process is very similar to creating a template. We'll have both the `react` and the `store` builders. The folder structure might look something like:
+Let's create another app `partner.shelf` that provides an alternative shelf with a different React component instead of providing a full template. The process is very similar to creating a template. We'll have both the `react` and the `store` builders. The folder structure might look something like:
 
 ```txt
 .
@@ -222,7 +222,7 @@ Let's create another app `partner.shelf` that provides an alternative shelf with
     └── blocks.json
 ```
 
-The `manifest.json` declares both builders and the dependency on `vtex.shelf` and `vtex.product-summary`, since the app want to extend the Dream Store `shelf` block.
+The `manifest.json` declares both builders and the dependency on `vtex.shelf` and `vtex.product-summary` since the app wants to extend the Dream Store `shelf` block.
 
 ```jsonc
 {
@@ -255,9 +255,9 @@ The `blocks.json` creates a `shelf` block that extends the `shelf` block on `vte
 }
 ```
 
-This structure is enough to provide this alternative shelf to be used on the Storefront editor. When installed, this app will provide the alternative shelf.
+This structure is enough to provide this alternative shelf to be used on the Storefront editor. When installed, this app provides an alternative shelf.
 
-Note that we've also created a brand new block, that doesn't extend any previous declared block. The `shelf-description`. We can create brand new blocks all we want. We may, for example, create a `creative-block` that provides a brand new feature and add it to the home page by providing a new `store/home` that uses it.
+Note that we've also created a brand new block, that doesn't extend any previously declared block. The `shelf-description`. We can create brand new blocks all we want. We may, for example, create a `creative-block` that provides a brand new feature and add it to the home page by providing a new `store/home` that uses it.
 
 ```json
 {
@@ -273,7 +273,7 @@ Note that we've also created a brand new block, that doesn't extend any previous
 
 ### Routes
 
-Suppose we want the `partner.theme` app to declare a new route. A new URL that can be accessed, providing some specific template. The `store` builder gives us that power via the `routes.json` file.
+Suppose we want the `partner.theme` app to declare a new route, a new URL that can be accessed providing some specific template. The `store` builder gives us that power via the `routes.json` file.
 
 ```txt
 .
@@ -283,9 +283,9 @@ Suppose we want the `partner.theme` app to declare a new route. A new URL that c
     └── blocks.json
 ```
 
-Suppose our store's url is `store.com` and we want the `store.com/custom` url to hit the `store/custom` template. We need to add a route to our `routes.json`.
+Suppose our store's URL is `store.com` and we want the `store.com/custom` URL to hit the `store/custom` template. We need to add a route to our `routes.json`.
 
-```jsonc
+```json
 {
     "store/custom": {
         "path": "/custom"
@@ -293,11 +293,11 @@ Suppose our store's url is `store.com` and we want the `store.com/custom` url to
 }
 ```
 
-This means that the `store/custom` declared on the `blocks.json` will be rendered when `/custom` is accessed after this app is installed.
+This means that the `store/custom` declared on the `blocks.json` is rendered when `/custom` is accessed after this app is installed.
 
 ### Themes
 
-There's a definition of which app is used as a theme is being used on the store. This is set by the Storefront editor. The default theme for every store is the Dream Store. Every store uses exactly one app as theme.
+There's a definition of which app is used as a theme is being used on the store. This is set by the Storefront editor. The default theme for every store is the Dream Store. Every store uses exactly one app as a theme.
 
 The theme definition because we will often want to install an app that provides a lot of blocks and wish those blocks to change the whole design of the store, not only provide some blocks to be used here and there. That why this is how we choose which block is used every time we need to choose one:
 
@@ -305,15 +305,15 @@ The theme definition because we will often want to install an app that provides 
 2. Does the theme extend the block defined here by using the same name? If so, use that.
 3. Use the defined block.
 
-That is, suppose we are trying using the `store/home` template from the Dream Store and are trying to decide which block will be used as `shelf`. The name `shelf` refers to the `shelf` block declared in `vtex.shelf`,  since `vtex.dreamstore` depends on `vtex.shelf`. If the block was explicitly replaced via the Storefront editor, we use the selected one. If the theme depends on `vtex.shelf` and declares a `shelf` block, we use that. Otherwise, we simply use the `shelf` defined in `vtex.shelf`, since that's what `store/home` referred to.
+That is, suppose we are trying using the `store/home` template from the Dream Store and are trying to decide which block is used as `shelf`. The name `shelf` refers to the `shelf` block declared in `vtex.shelf`,  since `vtex.dreamstore` depends on `vtex.shelf`. If the block was explicitly replaced via the Storefront editor, we would use the selected one. If the theme depends on `vtex.shelf` and declares a `shelf` block, we use that. Otherwise, we use the `shelf` defined in `vtex.shelf`, since that's what `store/home` referred to.
 
 ### Naming conflicts
 
-TODO. Explain the name conflicts resolving rules and how to specify the app using the `:` operator.
+TODO. Explain the name conflicts are resolving rules and how to specify the app using the `:` operator.
 
 1. If block name is declared in the same file, use that.
 2. If block name is declared in more than one dependency, fail.
-3. If block name is declared in exactly one dependency, use that.
+3. If block name is declared in precisely one dependency, use that.
 4. If block name is never declared, fail.
 
 ## Configs
