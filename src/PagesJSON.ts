@@ -41,7 +41,7 @@ function buildExtensionFromBlock (block: Readonly<Block>, treePath: string): Ext
 
 function getDeepExtensionDescriptions (treePath: string) {
   return (block: Readonly<Block>): DeepExtensionDescriptionArray => {
-    const currentTreePath = treePath === '' ? block.id : concat(concat(treePath, '/'), block.id)
+    const currentTreePath = treePath === '' ? block.rawID : concat(concat(treePath, '/'), block.rawID)
     return [
       buildExtensionFromBlock(block, currentTreePath),
       map(getDeepExtensionDescriptions(currentTreePath), block.blocks)

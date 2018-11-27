@@ -1,11 +1,18 @@
 import { ReactProps } from './React'
 
-export interface Block {
-  blocks: Block[]
-  component: string
-  description: string
-  id: string
-  name: string
-  normalizedID: string
-  props: ReactProps
+export class Block {
+  public blocks: Block[]
+  public component: string
+  public description: string
+  public rawID: string
+  public name: string
+  public props: ReactProps
+
+  /* Where 
+  public get parentID () {
+
+  }
 }
+
+type LocalBlockID = string /* ${LocalBlockID}/${string} */
+type BlockID = string /* ${appID}:${LocalBlockID} */
