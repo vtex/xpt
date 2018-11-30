@@ -18,7 +18,7 @@
 
 Stores using [VTEX IO](https://vtex.io/) can edit their content through the Storefront editor. This app allows a store admin to edit the layout, content and style of every page in the store.
 
-The default store installed on an VTEX IO store uses the [Dream Store](https://github.com/vtex-apps/dreamstore) theme. That is defined by the `vtex.dreamstore` app and it already provides a fully featured and highly configurable store that is continuously being improved by VTEX.
+The default VTEX IO store uses the [Dream Store](https://github.com/vtex-apps/dreamstore) theme. That is defined by the `vtex.dreamstore` app and it already provides a fully featured and highly configurable store that is continuously being improved by VTEX.
 
 ## Blocks
 
@@ -318,16 +318,134 @@ TODO. Explain the name conflicts resolving rules and how to specify the app usin
 
 ## Configs
 
-TODO. This is the advanced user part.
+We wish to empower the apps to create and apply every configuration that the storefront can. That's why the `store` builder accepts a `configs.json` file.
+
+```txt
+.
+├── manifest.json
+└── store
+    └── configs.json
+```
+
+Suppose we want every `shelf` from `vtex.shelf` to be replaced by an alternative `shelf` provided by the `partner.shelf` app. We could achieve that via either the Storefront editor or the `configs.json` file.
+
+```json
+{
+    "vtex.shelf:shelf": {
+        "block": "partner.shelf:shelf"
+    }
+}
+```
+
+We can also scope those configurations by containment in other blocks. For example, if we want only to replace the shelfs in the `store/home` template but not those in `store/search` or other templates, we could do that by using the containment operator.
+
+```json
+{
+    "store/home vtex.shelf:shelf": {
+        "block": "partner.shelf:shelf"
+    }
+}
+```
+
+The extensions of a block inherit the configurations contained on that block. That means that if I ever use a an alternative `store/home` template that extends it, this configuration will still be valid, that is, the alternative shelf will still be used by it.
+
+Other than changing the blocks, we can also set props for blocks via configs. For instance, suppose that the `Shelf` component used by the `vtex.shelf:shelf` block accepted a boolean prop `highlighted` that, when set to `true`, altered the design for that component. We could want to set that via configs for the `store/home` template instead of changing the block.
+
+```json
+{
+    "store/home shelf": {
+        "props": {
+            "highlighted": "true"
+        }
+    }
+}
+```
+
+Here, the app defining this config doesn't need to depend on `partner.shelf` anymore, only on `vtex.shelf`, therefore, we don't need to specify which `shelf` it refers to.
+
+### Block names
+
+Since we can select and configure blocks, it becomes useful to identify repeated blocks within the same template, that is, suppose I have a `store/home` extension with two shelves and want to apply different configs between them. I could use the `#` operator to set different names for these blocks without affecting at all their behavior at first.
+
+```json
+{
+    "store/home": {
+        "blocks": ["header/full", "shelf#top", "banner", "shelf#bottom", "footer"]
+    }
+}
+```
+
+Then, I could configure `shelf`, `shelf#top` and `shelf#bottom` all independently. The configurations applied to `shelf` would be set for both `shelf#top` and `shelf#bottom` and merged with the configurations specific to them.
+
+```json
+{
+    "store/home shelf": {
+        "props": {
+            "products-displayed": 3
+        }
+    },
+    "store/home shelf#top": {
+        "props": {
+            "highlighted": true
+        }
+    }
+}
+```
+
+The `store/home` would have it's first shelf highlighted and both of them displaying 3 products each.
 
 ### Configuring a block
 
-TODO.
+When defining a block, we accept inner block configurations. These work just like a configuration file, but scoped only for that block. We might want to declare an alternative `store/home` that uses the same `shelf` but sets a prop for the `product-summary` within that shelf, we could do that editing only the `blocks.json` file, never touching `configs.json`.
 
-- How to provide a block with some default config definitions.
+```jsonc
+{
+    "store/home": {
+        "blocks": ["header/full", "banner", "shelf", "footer"],
+        "configs": {
+            "shelf product-summary": {
+                "props": {
+                    "buy-button": "hide"
+                }
+            }
+        }
+    }
+}
+```
+
+This would require this app to depend on `vtex.product-summary`, since it refers to it.
 
 ### Plug and play
 
-TODO.
+Combining a `configs.json` with a `blocks.json` in an app can provide interesting plug and play functionalities. The `product-summary` block provided by `vtex.product-summary` contains an empty `reviews` block. That `blocks.json` looks something like this.
 
-- How to provide a plug and play block.
+```jsonc
+{
+    "product-summary": {
+        "component": "ProductSummary",
+        "blocks": ["reviews"]
+    },
+    "reviews": {
+    }
+}
+```
+
+A partner may create a `partner.star-reviews` app that, when installed, will instantly provide star-styled reviews for every `product-summary` in the store. It needs to extend `reviews` via `blocks.json`.
+
+```jsonc
+{
+    "reviews/stars": {
+        "component": "StarReviews"
+    }
+}
+```
+
+And, after defining that block, it may configure the store to use it.
+
+```jsonc
+{
+    "product-summary reviews": {
+        "block": "reviews/stars"
+    }
+}
+```
